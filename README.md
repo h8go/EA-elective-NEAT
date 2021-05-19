@@ -1,6 +1,11 @@
 # EA-elective-NEAT
 A repo to share the code of the NEAT algorithm, to play Atari games.
 
+- To see implementations of NEAT, see [here](http://eplex.cs.ucf.edu/neat_software/#NEAT).
+- The intermediate paper project [here](https://d9w.github.io/evolution/6_ops/articles/2_Cellular%20encoding.pdf?fbclid=IwAR0LaWU7TSTfk-oyxneqaOXtkTjdlY_NeHmIlVcd5bV4Vqkbr1y_q1Ao4xU).
+- The full class material [here](https://d9w.github.io/evolution/?fbclid=IwAR0wnX2CvXWOw6sEtLMilyQ94YDl5XAKj8kHOwiJxMUc2sLb900GTQQ_EsY).
+
+
 # prettyNEAT
 ![swingup](demo/img/swing.gif) ![biped](demo/img/biped.gif)
 ![ant](demo/img/ant.gif) ![racer](demo/img/race.gif)
