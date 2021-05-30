@@ -5,6 +5,16 @@ A repo to share the code of the NEAT algorithm, to play Atari games.
 - The intermediate paper project [here](https://d9w.github.io/evolution/6_ops/articles/2_Cellular%20encoding.pdf?fbclid=IwAR0LaWU7TSTfk-oyxneqaOXtkTjdlY_NeHmIlVcd5bV4Vqkbr1y_q1Ao4xU).
 - The full class material [here](https://d9w.github.io/evolution/?fbclid=IwAR0wnX2CvXWOw6sEtLMilyQ94YDl5XAKj8kHOwiJxMUc2sLb900GTQQ_EsY).
 
+The goal of this project is to get some experience running and comparing evolutionary algorithms. We will be competing on the [MinAtar benchmark](https://github.com/kenjyoung/MinAtar), specifically on the Breakout and Freeway games.  
+
+You will work in teams of 4-5 on a specific algorithm. You can optimize the hyperparameters of this method and propose algorihtm enhancements for the MinAtar environments in order to maximize your team’s final score. We will compare all 5 algorithms on the two games using a total maximum budget of 50000 evaluations for a single evolution. You should run the evolutionary method at least 3 times to give an idea of final average and fitness.  
+
+The deliverable for this project is a presentation of 15 minutes. Your team should present:
+- an overview of the algorithm
+- how the algorithm is applied to MinAtar
+- a study of hyperparameter impact on performance
+- presentation of final results: evolution, agent video
+
 
 # prettyNEAT
 ![swingup](demo/img/swing.gif) ![biped](demo/img/biped.gif)

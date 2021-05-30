@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from .task_gym import GymTask
 from .config import games
 import json
@@ -27,10 +29,9 @@ def loadHyp(pFileName, printHyp=False):
   else:
     hyp['ann_actRange'] = np.full_like(task.actRange,hyp['alg_act'])
 
-
-
   if printHyp is True:
-    print(json.dumps(hyp, indent=4, sort_keys=True))
+    pprint(hyp)
+    # print(json.dumps(hyp, indent=4, sort_keys=True))
   return hyp
 
 def updateHyp(hyp,pFileName=None):
