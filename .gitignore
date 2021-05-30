@@ -365,3 +365,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# special skips.
+*.gif
+log/
