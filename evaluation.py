@@ -1,7 +1,16 @@
-import numpy as np
 import argparse
 
-from domain import *  # Task environments
+# from domain import *  # Task environments
+import numpy as np
+
+from domain import (
+    loadHyp,
+    updateHyp,
+    GymTask,
+    games)
+from prettyNEAT import (
+    importNet,
+    lsave)
 
 np.set_printoptions(precision=2)
 np.set_printoptions(linewidth=160)
@@ -21,6 +30,8 @@ def main(argv):
     hyp = loadHyp(pFileName=hyp_default)
     updateHyp(hyp, hyp_adjust)
     task = GymTask(games[hyp['task']], nReps=hyp['alg_nReps'])
+    print(games[hyp["task"]])
+    print(task)
 
     # Bullet needs some extra help getting started
     if hyp['task'].startswith("bullet"):
@@ -48,22 +59,22 @@ if __name__ == "__main__":
     ''' Parse input and launch '''
     parser = argparse.ArgumentParser(description=('Test ANNs on Task'))
 
-    parser.add_argument('-i', '--infile', type=str, \
+    parser.add_argument('-i', '--infile', type=str,
                         help='file name for genome input', default='log/test_best.out')
 
-    parser.add_argument('-o', '--outPref', type=str, \
+    parser.add_argument('-o', '--outPref', type=str,
                         help='file name prefix for result input', default='log/result_')
 
-    parser.add_argument('-d', '--default', type=str, \
+    parser.add_argument('-d', '--default', type=str,
                         help='default hyperparameter file', default='config/default_neat.json')
 
-    parser.add_argument('-p', '--hyperparam', type=str, \
+    parser.add_argument('-p', '--hyperparam', type=str,
                         help='hyperparameter file', default=None)
 
-    parser.add_argument('-r', '--nReps', type=int, \
+    parser.add_argument('-r', '--nReps', type=int,
                         help='Number of repetitions', default=1)
 
-    parser.add_argument('-v', '--view', type=str2bool, \
+    parser.add_argument('-v', '--view', type=str2bool,
                         help='Visualize (True) or Save (False)', default=True)
 
     args = parser.parse_args()
