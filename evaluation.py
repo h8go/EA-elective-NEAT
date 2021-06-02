@@ -1,6 +1,8 @@
 import argparse
 
 # from domain import *  # Task environments
+from pprint import pprint
+
 import numpy as np
 
 from domain import (
@@ -78,4 +80,9 @@ if __name__ == "__main__":
                         help='Visualize (True) or Save (False)', default=True)
 
     args = parser.parse_args()
+
+    # +== EA-elective-NEAT =============================================================================================
+    pprint(args.__dict__)
+    # ==================================================================================================================
+
     main(args)

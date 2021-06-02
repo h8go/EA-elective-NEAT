@@ -1,4 +1,6 @@
 import argparse
+from pprint import pprint
+
 import numpy as np
 
 np.set_printoptions(precision=2, linewidth=160)
@@ -97,6 +99,9 @@ if __name__ == "__main__":
                         help='number of cores to use', default=8)
 
     args = parser.parse_args()
+    # +== EA-elective-NEAT =============================================================================================
+    pprint(args.__dict__)
+    # ==================================================================================================================
     fileName = args.outPrefix
     hyp_default = args.default
     hyp_adjust = args.hyperparam
@@ -104,6 +109,9 @@ if __name__ == "__main__":
     hyp = loadHyp(pFileName=hyp_default, printHyp=True)
     updateHyp(hyp, hyp_adjust)
 
+    # +== EA-elective-NEAT =============================================================================================
+    print("data will be stored in", fileName)
+    # ==================================================================================================================
     data = DataGatherer(fileName, hyp)
     neat = Neat(hyp)
 

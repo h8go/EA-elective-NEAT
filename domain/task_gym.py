@@ -103,10 +103,7 @@ class GymTask:
 
         if self.maxEpisodeLength == 0:
             if view:
-                if self.needsClosed:
-                    self.env.render(close=done)
-                else:
-                    self.env.render()
+                self.wrapper_render(done)
             return reward
         else:
             totalReward = reward
@@ -119,10 +116,7 @@ class GymTask:
             # ==========================================================================================================
             totalReward += reward
             if view:
-                if self.needsClosed:
-                    self.env.render(close=done)
-                else:
-                    self.env.render()
+                self.wrapper_render(done)
             if done:
                 break
         return totalReward
@@ -146,6 +140,15 @@ class GymTask:
             state, reward, done, _ = self.env.step(actions)
 
         return state, reward, done, {}
+
+    def wrapper_render(self, done):
+        if self.is_minatar:
+            self.env.display_state(time=50)
+        else:
+            if self.needsClosed:
+                self.env.render(close=done)
+            else:
+                self.env.render()
     # ==================================================================================================================
 
 

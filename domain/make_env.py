@@ -1,4 +1,6 @@
-from minatar import Environment
+from wrappers import (
+    MinatarBreakoutWrapper,
+    MinatarFreewaytWrapper)
 
 
 def make_env(env_name, seed=-1, render_mode=False):
@@ -50,11 +52,14 @@ def make_env(env_name, seed=-1, render_mode=False):
             env.dt = 0.01
             env.t_limit = 200
 
-    # == EA-elective-NEAT ==============================================================================================
+    # +== EA-elective-NEAT =============================================================================================
     elif env_name.startswith("minatar:"):
         env_name = env_name.split(':')[1]
-        env = Environment(env_name)
-    # ==================================================================================================================
+        if env_name == "breakout":
+            env = MinatarBreakoutWrapper(env_name, sticky_action_prob=.0, random_seed=0)
+        elif env_name == "freeway":
+            env = MinatarFreewaytWrapper(env_name, sticky_action_prob=.0, random_seed=0)
+    # =================================================================================================================+
 
     # -- Other  -------------------------------------------------------- -- #
     else:
