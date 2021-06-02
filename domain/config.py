@@ -168,7 +168,7 @@ games['bullet_ant'] = bullet_ant
 # -- Breakout Minatar --------------------------------------------------- -- #
 breakout = Game(env_name="minatar:breakout",
                 actionSelect="softmax",
-                input_size=400,
+                input_size=100,
                 output_size=6,
                 time_factor=0,
                 layers=[5, 5],
@@ -183,4 +183,25 @@ breakout = Game(env_name="minatar:breakout",
                                'force']
                 )
 games["minatar:breakout"] = breakout
+# ======================================================================================================================
+
+# == EA-elective-NEAT ==================================================================================================
+# -- Freeway Minatar --------------------------------------------------- -- #
+freeway = Game(env_name="minatar:freeway",
+                actionSelect="softmax",
+                input_size=100,
+                output_size=6,
+                time_factor=0,
+                layers=[5, 5],
+                i_act=np.full(5, 1),
+                h_act=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                o_act=np.full(1, 1),
+                weightCap=2.0,
+                noise_bias=0.0,
+                output_noise=[False, False, False],
+                max_episode_length=200,
+                in_out_labels=['x', 'x_dot', 'cos(theta)', 'sin(theta)', 'theta_dot',
+                               'force']
+                )
+games["minatar:freeway"] = freeway
 # ======================================================================================================================

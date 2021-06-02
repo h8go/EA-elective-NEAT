@@ -126,6 +126,8 @@ class GymTask:
         if self.is_minatar:
             self.env.reset()
             state = self.env.state()
+            state = state.transpose((2, 0, 1))
+            state = np.sum([state[i] * (i+1) for i in range(state.shape[0])], axis=0)
             state = state.flatten()
         else:
             state = self.env.reset()
@@ -135,6 +137,8 @@ class GymTask:
         if self.is_minatar:
             reward, done = self.env.act(minatar_action(actions))
             state = self.env.state()
+            state = state.transpose((2, 0, 1))
+            state = np.sum([state[i] * (i+1) for i in range(state.shape[0])], axis=0)
             state = state.flatten()
         else:
             state, reward, done, _ = self.env.step(actions)
@@ -144,6 +148,9 @@ class GymTask:
     def wrapper_render(self, done):
         if self.is_minatar:
             self.env.display_state(time=50)
+            state = self.env.state().transpose((2, 0, 1))
+            state = np.sum([state[i] * (i + 1) for i in range(state.shape[0])], axis=0)
+            print(state.shape)
         else:
             if self.needsClosed:
                 self.env.render(close=done)
