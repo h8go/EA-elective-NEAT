@@ -1,4 +1,8 @@
 import random
+from pprint import pprint
+
+from PIL import Image
+
 from .make_env import make_env
 from prettyNEAT import *
 
@@ -34,6 +38,7 @@ class GymTask:
 
         # == EA-elective-NEAT ==========================================================================================
         self.is_minatar = game.env_name.startswith("minatar:")
+        self.images = []
         # ==============================================================================================================
 
         # Special needs...
@@ -63,6 +68,14 @@ class GymTask:
         for iRep in range(nRep):
             reward[iRep] = self.testInd(wVec, aVec, view=view, seed=seed + iRep)
         fitness = np.mean(reward)
+
+        # == EA-elective-NEAT ==========================================================================================
+        if view:
+            print(self.images)
+            print(len(self.images))
+            self.images[0].save("./video.gif", save_all=True, append_images=self.images[1:], optimize=False, duration=1000 // 30, loop=0)
+        # ==============================================================================================================
+
         return fitness
 
     def testInd(self, wVec, aVec, view=False, seed=-1):
@@ -126,8 +139,6 @@ class GymTask:
         if self.is_minatar:
             self.env.reset()
             state = self.env.state()
-            state = state.transpose((2, 0, 1))
-            state = np.sum([state[i] * (i+1) for i in range(state.shape[0])], axis=0)
             state = state.flatten()
         else:
             state = self.env.reset()
@@ -137,8 +148,6 @@ class GymTask:
         if self.is_minatar:
             reward, done = self.env.act(minatar_action(actions))
             state = self.env.state()
-            state = state.transpose((2, 0, 1))
-            state = np.sum([state[i] * (i+1) for i in range(state.shape[0])], axis=0)
             state = state.flatten()
         else:
             state, reward, done, _ = self.env.step(actions)
@@ -148,9 +157,13 @@ class GymTask:
     def wrapper_render(self, done):
         if self.is_minatar:
             self.env.display_state(time=50)
-            state = self.env.state().transpose((2, 0, 1))
-            state = np.sum([state[i] * (i + 1) for i in range(state.shape[0])], axis=0)
-            print(state.shape)
+            state = self.env.state()
+            # pprint(Image.__dict__)
+            image = Image.fromarray(state/np.max(state))
+            # image = Image.new("RGB", state.shape, (0, 0, 0))
+            pprint(image.__dict__)
+            # image[:] = state[:]
+            self.images.append(image)
         else:
             if self.needsClosed:
                 self.env.render(close=done)
