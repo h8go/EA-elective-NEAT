@@ -74,6 +74,10 @@ class GymTask:
         if view:
             print(self.images)
             print(len(self.images))
+            print(self.images[0].getdata())
+            for i in range(len(self.images)):
+                self.images[i]=self.images[i].convert('P')
+                print(self.images[i].getdata())
             plt.imshow(self.images[0])
             plt.show()
             self.images[0].save("./video.gif", save_all=True, append_images=self.images[1:], optimize=False, duration=1000 // 30, loop=0)
