@@ -74,6 +74,7 @@ class GymTask:
             print(self.images)
             print(len(self.images))
             self.images[0].save("./video.gif", save_all=True, append_images=self.images[1:], optimize=False, duration=1000 // 30, loop=0)
+            print("youpi")
         # ==============================================================================================================
 
         return fitness
@@ -99,7 +100,7 @@ class GymTask:
         # == EA-elective-NEAT ==========================================================================================
             if not self.is_minatar:
                 self.env.seed(seed)
-        state = self.wrapper_reset()
+        state = self.env.reset()
         # print("wVec: {} ({}),\naVec: {} ({}),\nself.nInput: {},\nself.nOutput: {},\nstate.shape: {}".format(
         #     wVec, wVec.shape, aVec, aVec.shape, self.nInput, self.nOutput, state.shape))
         # ==============================================================================================================
@@ -111,12 +112,12 @@ class GymTask:
         predName = str(np.mean(wVec[wVec != 0]))
         # == EA-elective-NEAT ==========================================================================================
         # print("annOut: {} ({}),\naction: {} ({})".format(annOut, annOut.shape, action, action.shape))
-        state, reward, done, info = self.wrapper_step(action)
+        state, reward, done, info = self.env.step(action)
         # ==============================================================================================================
 
         if self.maxEpisodeLength == 0:
             if view:
-                self.wrapper_render(done)
+                self.render(done)
             return reward
         else:
             totalReward = reward
@@ -125,56 +126,18 @@ class GymTask:
             annOut = act(wVec, aVec, self.nInput, self.nOutput, state)
             action = selectAct(annOut, self.actSelect)
             # == EA-elective-NEAT ======================================================================================
-            state, reward, done, info = self.wrapper_step(action)
+            state, reward, done, info = self.env.step(action)
             # ==========================================================================================================
             totalReward += reward
             if view:
-                self.wrapper_render(done)
+                self.render(done)
             if done:
                 break
         return totalReward
 
-    # == EA-elective-NEAT ==============================================================================================
-    def wrapper_reset(self):
-        if self.is_minatar:
-            self.env.reset()
-            state = self.env.state()
-            state = state.flatten()
+    def render(self, done):
+        if self.needsClosed:
+            image = self.env.render(close=done)
         else:
-            state = self.env.reset()
-        return state
-
-    def wrapper_step(self, actions):
-        if self.is_minatar:
-            reward, done = self.env.act(minatar_action(actions))
-            state = self.env.state()
-            state = state.flatten()
-        else:
-            state, reward, done, _ = self.env.step(actions)
-
-        return state, reward, done, {}
-
-    def wrapper_render(self, done):
-        if self.is_minatar:
-            self.env.display_state(time=50)
-            state = self.env.state()
-            # pprint(Image.__dict__)
-            image = Image.fromarray(state/np.max(state))
-            # image = Image.new("RGB", state.shape, (0, 0, 0))
-            pprint(image.__dict__)
-            # image[:] = state[:]
-            self.images.append(image)
-        else:
-            if self.needsClosed:
-                self.env.render(close=done)
-            else:
-                self.env.render()
-    # ==================================================================================================================
-
-
-# == EA-elective-NEAT ==================================================================================================
-def minatar_action(actions):
-    actions = actions.flatten()
-    action = np.random.choice(np.arange(actions.size), p=actions)
-    return action
-# ======================================================================================================================
+            image = self.env.render()
+        self.images.append(image)

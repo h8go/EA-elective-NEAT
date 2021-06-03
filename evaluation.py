@@ -32,8 +32,6 @@ def main(argv):
     hyp = loadHyp(pFileName=hyp_default)
     updateHyp(hyp, hyp_adjust)
     task = GymTask(games[hyp['task']], nReps=hyp['alg_nReps'])
-    print(games[hyp["task"]])
-    print(task)
 
     # Bullet needs some extra help getting started
     if hyp['task'].startswith("bullet"):
@@ -46,8 +44,6 @@ def main(argv):
 
     print("[***]\tFitness:", fitness)
     lsave(outPref + 'fitDist.out', fitness)
-
-
 
 
 def str2bool(v):
