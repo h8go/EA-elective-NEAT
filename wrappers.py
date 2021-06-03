@@ -1,5 +1,6 @@
 from pprint import pprint
 
+import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 from minatar import Environment
@@ -46,11 +47,9 @@ class MinatarBreakoutWrapper(Environment):
         """
         self.display_state(time=50)
         state = self._state()
-        # pprint(Image.__dict__)
-        image = Image.fromarray(state / np.max(state))
-        # image = Image.new("RGB", state.shape, (0, 0, 0))
+        state = state / np.max(state) * 256
+        image = Image.fromarray(state)
         pprint(image.__dict__)
-        # image[:] = state[:]
         return image
 
     def _state(self):
@@ -101,11 +100,9 @@ class MinatarFreewaytWrapper(Environment):
         """
         self.display_state(time=50)
         state = self._state()
-        # pprint(Image.__dict__)
-        image = Image.fromarray(state / np.max(state))
-        # image = Image.new("RGB", state.shape, (0, 0, 0))
+        state = state / np.max(state) * 256
+        image = Image.fromarray(state)
         pprint(image.__dict__)
-        # image[:] = state[:]
         return image
 
     def _state(self):

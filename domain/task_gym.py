@@ -2,6 +2,7 @@ import random
 from pprint import pprint
 
 from PIL import Image
+from matplotlib import pyplot as plt
 
 from .make_env import make_env
 from prettyNEAT import *
@@ -73,6 +74,8 @@ class GymTask:
         if view:
             print(self.images)
             print(len(self.images))
+            plt.imshow(self.images[0])
+            plt.show()
             self.images[0].save("./video.gif", save_all=True, append_images=self.images[1:], optimize=False, duration=1000 // 30, loop=0)
             print("youpi")
         # ==============================================================================================================
@@ -101,8 +104,6 @@ class GymTask:
             if not self.is_minatar:
                 self.env.seed(seed)
         state = self.env.reset()
-        # print("wVec: {} ({}),\naVec: {} ({}),\nself.nInput: {},\nself.nOutput: {},\nstate.shape: {}".format(
-        #     wVec, wVec.shape, aVec, aVec.shape, self.nInput, self.nOutput, state.shape))
         # ==============================================================================================================
         self.env.t = 0
         annOut = act(wVec, aVec, self.nInput, self.nOutput, state)
@@ -111,7 +112,6 @@ class GymTask:
         # wVec[wVec != 0]
         predName = str(np.mean(wVec[wVec != 0]))
         # == EA-elective-NEAT ==========================================================================================
-        # print("annOut: {} ({}),\naction: {} ({})".format(annOut, annOut.shape, action, action.shape))
         state, reward, done, info = self.env.step(action)
         # ==============================================================================================================
 
